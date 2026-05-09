@@ -1,5 +1,20 @@
 # *COLLABORATORS READ THE F@#KING MANUAL*
 
+# The **"Golden Rule" Workflow** *(The James Protocol)*
+Tell your team they must follow these 4 Steps every single time they sit down to code:
+
+**A. START :** git pull origin main
+
+(Always get the latest updates before you type a single line of code.)
+
+**B. WORK :** Write your code in your assigned file.
+
+**C. SYNC :** git pull origin main (Again!) (Do this right before you push, just in case someone else finished their work while you were coding.)
+
+**D. FINISH :** git add . -> git commit -m "added sidebar" -> git push origin main
+
+
+
 1. **The Direct Collaborator Method (Best for small teams)**
 If you trust your teammates and want them to be able to push changes directly to your repository, you can add them as Collaborators.
 
