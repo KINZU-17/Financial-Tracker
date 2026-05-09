@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Sidebar from './Components/SideBar';
-import ExpenseForm from './Components/ExpenseForm';
-import ExpenseTable from './Components/ExpenseTable';
-import Search from './Components/Search';
+import Sidebar from './Components/SideBar';  // From Louis
+import ExpenseForm from './Components/ExpenseForm';  // From James
+import ExpenseTable from './Components/ExpenseTable';  // From Crystal
+import Search from './Components/Search';  // From Robby
 import { initialExpenses } from './data/content';
 
 function App() {
