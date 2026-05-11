@@ -1,7 +1,10 @@
-import React from 'react'
-
-export default function Search() {
+export default function Search({ onSearch }) {
   return (
-    <div>Search</div>
-  )
+    <input 
+      type="text" 
+      placeholder="Search by description..." 
+      className="w-full p-2 border rounded-lg bg-white shadow-inner focus:outline-blue-500"
+      onChange={(e) => onSearch(e.target.value)}
+    />
+  );
 }
