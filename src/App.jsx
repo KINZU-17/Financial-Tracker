@@ -7,6 +7,7 @@ import Search from './Components/Search';
 import SummaryCards from './Components/SummaryCards';
 import Transactions from "./Components/Transactions";
 import { initialExpenses } from './data/content';
+import Analytics from './Components/Analytics';
 
 function App() {
   // 1. PERSISTENCE: Initialize state from LocalStorage or fallback to initialExpenses
@@ -111,7 +112,10 @@ function App() {
               </div>
             }
           />
-
+<Route
+  path="/analytics"
+  element={<Analytics expenses={expenses} />}
+/>
         </Routes>
       </div>
     </div>
