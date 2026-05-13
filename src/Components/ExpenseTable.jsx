@@ -28,7 +28,7 @@ export default function ExpenseTable({ expenses, onDelete }) {
 
           {expenses.length > 0 ? (
 
-            expenses.map((expense) => (
+            expenses.map((expense, index) => (
 
               <tr
                 key={expense.id}
@@ -36,7 +36,7 @@ export default function ExpenseTable({ expenses, onDelete }) {
               >
 
                 <td className="p-4 text-gray-700">
-                  {expense.id}
+                  {index + 1}
                 </td>
 
                 <td className="p-4 font-medium text-gray-800">
