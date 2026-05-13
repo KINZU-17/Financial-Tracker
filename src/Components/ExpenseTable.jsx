@@ -1,96 +1,95 @@
 import React from "react";
 
-export default function ExpenseTable() {
-
-  const expenses = [
-    {
-      date: "2026-05-11",
-      description: "Netflix Subscription",
-      category: "Entertainment",
-      amount: 2500,
-    },
-
-    {
-      date: "2026-05-10",
-      description: "Groceries",
-      category: "Food",
-      amount: 4500,
-    },
-
-    {
-      date: "2026-05-09",
-      description: "Uber Ride",
-      category: "Transport",
-      amount: 1200,
-    },
-  ];
-
+export default function ExpenseTable({ expenses, onDelete }) {
   return (
-    <div className="bg-gray-900 mt-8 p-6 rounded-2xl shadow-lg">
+    <div className="overflow-x-auto">
 
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h2 className="text-2xl font-bold text-white">Transactions</h2>
+      <table className="w-full text-left border-collapse">
 
-          <p className="text-gray-400 text-sm">
-            List of your recent transactions
-          </p>
-        </div>
+        <thead className="bg-gray-100">
+          <tr className="text-gray-600 text-sm uppercase">
 
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold">
-          Add Transaction
-        </button>
-      </div>
+            <th className="p-4">ID</th>
 
-      <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
+            <th className="p-4">Description</th>
 
-          <thead>
-            <tr className="text-gray-400 border-b border-gray-700">
-              <th className="p-3">ID</th>
-              <th className="p-3">Amount</th>
-              <th className="p-3">Description</th>
-              <th className="p-3">Category</th>
-              <th className="p-3">Date</th>
-              <th className="p-3">Created At</th>
-            </tr>
-          </thead>
+            <th className="p-4">Category</th>
 
-          <tbody>
-            {expenses.map((expense, index) => (
+            <th className="p-4">Amount</th>
+
+            <th className="p-4">Date</th>
+
+            <th className="p-4 text-center">Actions</th>
+
+          </tr>
+        </thead>
+
+        <tbody>
+
+          {expenses.length > 0 ? (
+
+            expenses.map((expense) => (
+
               <tr
-                key={index}
-                className="border-b border-gray-800 hover:bg-gray-800 transition"
+                key={expense.id}
+                className="border-b hover:bg-gray-50 transition"
               >
-                <td className="p-3 text-white">
-                  {index + 1}
+
+                <td className="p-4 text-gray-700">
+                  {expense.id}
                 </td>
 
-                <td className="p-3 text-green-400 font-semibold">
-                  KES {expense.amount}
-                </td>
-
-                <td className="p-3 text-white">
+                <td className="p-4 font-medium text-gray-800">
                   {expense.description}
                 </td>
 
-                <td className="p-3 text-blue-400">
-                  {expense.category}
+                <td className="p-4">
+                  <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
+                    {expense.category}
+                  </span>
                 </td>
 
-                <td className="p-3 text-gray-300">
+                <td className="p-4 font-semibold text-green-600">
+                  KES {expense.amount}
+                </td>
+
+                <td className="p-4 text-gray-500">
                   {expense.date}
                 </td>
 
-                <td className="p-3 text-gray-500">
-                  {new Date().toLocaleDateString()}
-                </td>
-              </tr>
-            ))}
-          </tbody>
+                <td className="p-4 text-center">
 
-        </table>
-      </div>
+                  <button
+                    onClick={() => onDelete(expense.id)}
+                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm"
+                  >
+                    Delete
+                  </button>
+
+                </td>
+
+              </tr>
+            ))
+
+          ) : (
+
+            <tr>
+
+              <td
+                colSpan="6"
+                className="text-center p-8 text-gray-400"
+              >
+                No expenses found
+              </td>
+
+            </tr>
+
+          )}
+
+        </tbody>
+
+      </table>
+
     </div>
   );
 }
