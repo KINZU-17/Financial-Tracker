@@ -16,7 +16,7 @@ function App() {
       amount: parseFloat(newExpense.amount)
     };
 
-    setExpenses([formatted, ...expenses]);
+    setExpenses([...expenses, formatted ]);
   };
 
   const deleteExpense = (id) => {
