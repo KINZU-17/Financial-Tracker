@@ -1,95 +1,119 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
+import Sidebar from './Components/SideBar';
+import ExpenseForm from './Components/ExpenseForm';
+import ExpenseTable from './Components/ExpenseTable';
+import Search from './Components/Search';
+import { initialExpenses } from './data/content';
 
-export default function ExpenseTable({ expenses, onDelete }) {
+function App() {
+
+  const [expenses, setExpenses] = useState(() => {
+
+    const savedExpenses = localStorage.getItem("expenses");
+
+    return savedExpenses
+      ? JSON.parse(savedExpenses)
+      : initialExpenses;
+
+  });
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+
+    localStorage.setItem(
+      "expenses",
+      JSON.stringify(expenses)
+    );
+
+  }, [expenses]);
+
+  const addExpense = (newExpense) => {
+
+    const formatted = {
+      ...newExpense,
+      id: Date.now(),
+      amount: parseFloat(newExpense.amount)
+    };
+
+    setExpenses([...expenses, formatted]);
+  };
+
+  const deleteExpense = (id) => {
+
+    setExpenses(
+      expenses.filter((exp) => exp.id !== id)
+    );
+
+  };
+
+  const filteredExpenses = expenses.filter((exp) =>
+    exp.description
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="overflow-x-auto">
 
-      <table className="w-full text-left border-collapse">
+    <div className="flex min-h-screen bg-gray-50 font-sans">
 
-        <thead className="bg-gray-100">
-          <tr className="text-gray-600 text-sm uppercase">
+      <Sidebar />
 
-            <th className="p-4">ID</th>
+      <main className="flex-1 p-4 md:p-10 ml-64">
 
-            <th className="p-4">Description</th>
+        <div className="max-w-6xl mx-auto">
 
-            <th className="p-4">Category</th>
+          <header className="mb-8">
 
-            <th className="p-4">Amount</th>
+            <h1 className="text-3xl font-bold text-gray-900">
+              Financial Tracker
+            </h1>
 
-            <th className="p-4">Date</th>
+            <p className="text-gray-500">
+              Manage your daily expenses and income
+            </p>
 
-            <th className="p-4 text-center">Actions</th>
+          </header>
 
-          </tr>
-        </thead>
+          <div className="grid gap-8">
 
-        <tbody>
+            <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
 
-          {expenses.length > 0 ? (
+              <ExpenseForm onAdd={addExpense} />
 
-            expenses.map((expense, index) => (
+            </section>
 
-              <tr
-                key={expense.id}
-                className="border-b hover:bg-gray-50 transition"
-              >
+            <section className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
 
-                <td className="p-4 text-gray-700">
-                  {index + 1}
-                </td>
+              <div className="p-4 border-b bg-gray-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
 
-                <td className="p-4 font-medium text-gray-800">
-                  {expense.description}
-                </td>
+                <h2 className="font-semibold text-gray-700 text-lg">
+                  Transactions
+                </h2>
 
-                <td className="p-4">
-                  <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
-                    {expense.category}
-                  </span>
-                </td>
+                <div className="w-full md:w-72">
 
-                <td className="p-4 font-semibold text-green-600">
-                  KES {expense.amount}
-                </td>
+                  <Search onSearch={setSearchTerm} />
 
-                <td className="p-4 text-gray-500">
-                  {expense.date}
-                </td>
+                </div>
 
-                <td className="p-4 text-center">
+              </div>
 
-                  <button
-                    onClick={() => onDelete(expense.id)}
-                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm"
-                  >
-                    Delete
-                  </button>
+              <ExpenseTable
+                expenses={filteredExpenses}
+                onDelete={deleteExpense}
+              />
 
-                </td>
+            </section>
 
-              </tr>
-            ))
+          </div>
 
-          ) : (
+        </div>
 
-            <tr>
-
-              <td
-                colSpan="6"
-                className="text-center p-8 text-gray-400"
-              >
-                No expenses found
-              </td>
-
-            </tr>
-
-          )}
-
-        </tbody>
-
-      </table>
+      </main>
 
     </div>
   );
 }
+
+export default App;
